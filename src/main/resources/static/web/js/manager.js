@@ -10,7 +10,7 @@ const app = new Vue({
     methods:{
         // load and display JSON sent by server for /clients
         loadData: function() {
-            axios.get("/clients")
+            axios.get("rest/clients")
             .then(function (response) {
                 // handle success
                 app.outPut = response.data;
