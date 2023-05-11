@@ -10,18 +10,13 @@ import java.time.LocalDateTime;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private Long id;
-
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
+    @GenericGenerator(name = "native",strategy = "native")
+    private long id;
     private TransactionType type;
-
-    private int amount;
-
+    private Double amount;
     private String description;
-
     private LocalDateTime date;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
@@ -29,21 +24,29 @@ public class Transaction {
 
     public Transaction(){}
 
-    public Transaction(Long id, TransactionType type, Account account, LocalDateTime date, String description, int amount) {
-        this.id = id;
+    public Transaction(TransactionType type, Double amount, String description, LocalDateTime date) {
         this.type = type;
-        this.account = account;
-        this.date = date;
-        this.description = description;
         this.amount = amount;
+        this.description = description;
+        this.date = date;
 
     }
 
-    public Long getId() {
+    public Account getAccount() {
+        return account;
+    }
+
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -55,21 +58,12 @@ public class Transaction {
         this.type = type;
     }
 
-    @JsonIgnore
-    public Account getAccount() {
-        return account;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getDescription() {
@@ -80,11 +74,23 @@ public class Transaction {
         this.description = description;
     }
 
-    public int getAmount() {
-        return amount;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", type=" + type +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", account=" + account +
+                '}';
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,14 +24,14 @@
             <div class="row mt-5">
                 <div class="col-12 col-md-2">
                     <div class="bg-light">
-                        <a href="./accounts.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <a href="/web/accounts.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <img class="menu-logo" src="img/logo vinotinto.png">
                         <span class="fs-5">Banco Vinotinto</span>
                         </a>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
-                                <a href="./accounts.html" class="nav-link active">
+                                <a href="/web/accounts.html" class="nav-link active">
                                     <i class="bi bi-inboxes"></i>
                                     Accounts
                                 </a>
@@ -93,12 +93,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div v-for="loan in clientInfo.loans" class="col-12 col-md-3 mt-2">
-                            <div class="card border-0 loan">
+                        <div v-for="clientLoans in clientInfo.clientLoans" class="col-12 col-md-3 mt-2">
+                            <div class="card border-0 clientLoans">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ loan.name }}</h5>
-                                    <p class="card-text"> payments: {{ loan.payments}}</p>
-                                    <p class="text-center lead account-balance"> ${{ loan.amount }} </p>
+                                    <h5 class="card-title">{{ clientLoans.name }}</h5>
+                                    <p class="card-text"> payments: {{ clientLoans.payments}}</p>
+                                    <p class="text-center lead account-balance"> ${{ clientLoans.amount }} </p>
                                 </div>
                             </div>
                         </div>

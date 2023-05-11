@@ -1,18 +1,17 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -23,88 +22,62 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
-									  TransactionRepository transactionRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository,
+									  ClientLoanRepository clientLoanRepository
+	) {
 		return (args) -> {
-
 			//Clientes
-			Client melba = new Client();
-			melba.setFirstName("melba");
-			melba.setLastName("morel");
-			melba.setEmail("melba@gmail.com");
-
-			Client ana = new Client();
-			ana.setFirstName("Ana");
-			ana.setLastName("Arias");
-			ana.setEmail("ana@gmail.com");
-
-			clientRepository.save(ana);
-
-			clientRepository.save(melba);
+			Client client1 = new Client("Melba", "Lorenzo", "melba@gmail.com");
+			Client client2 = new Client("Admin", "Admin", "admin@gmail.com");
+			Client client3 = new Client("root", "rootLasName", "root@gmail.com");
 
 			//Cuentas
-			Account account1 = new Account();
-			account1.setNumber("VIN001");
-			account1.setClient(melba);
-			account1.setCreationDate(LocalDateTime.now());
-			account1.setBalance(5000.0);
-
-			accountRepository.save(account1);
-
-			Account account2 = new Account();
-			account2.setNumber("VIN002");
-			account2.setClient(melba);
-			account2.setCreationDate(LocalDateTime.now());
-			account2.setBalance(7500.0);
-
-			accountRepository.save(account2);
-
-			Account account3 = new Account();
-			account3.setNumber("VIN003");
-			account3.setClient(ana);
-			account3.setCreationDate(LocalDateTime.now());
-			account3.setBalance(8000.0);
-
-			accountRepository.save(account3);
+			Account account1 = new Account("VIN001",LocalDateTime.now(),5000.00);
+			Account account2 = new Account("VIN002",LocalDateTime.now().plusDays(1),7500.00);
+			Account account3 = new Account("VIN003",LocalDateTime.now(),10000.00);
 
 			//Transacciones
-			Transaction transaction1 = new Transaction();
-			transaction1.setType(TransactionType.DEBITO);
-			transaction1.setAmount(-5000);
-			transaction1.setAccount(account2);
-			transaction1.setDate(LocalDateTime.now());
-			transaction1.setDescription("Transacccion hecha desde la cuenta 2");
+			Transaction transaction1 = new Transaction(TransactionType.DEBITO, 1000.00, "Cuota", LocalDateTime.now());
+			Transaction transaction2 = new Transaction(TransactionType.CREDITO,2000.00,"Pago",LocalDateTime.now());
+
+			//Payments y Loans
+			List<Integer> payments1 = new ArrayList<>(Arrays.asList(12,24,36,48,60));
+			Loan loan1 = new Loan("Hipotecario",500.000,payments1);
+			List<Integer> payments2 = new ArrayList<>(Arrays.asList(6,12,24));
+			Loan loan2 = new Loan("Personal",100.000,payments2);
+			List<Integer> payments3 = new ArrayList<>(Arrays.asList(6,12,24,36));
+			Loan loan3 = new Loan("Automotriz",300.000,payments3);
+
+			ClientLoan clientLoan1 = new ClientLoan(50000.00,12);
+			ClientLoan clientLoan2 = new ClientLoan(10000.00,6);
+
+
+			client1.addAccount(account1);
+			client1.addAccount(account2);
+			client2.addAccount(account3);
+			account1.addTransaction(transaction1);
+			account1.addTransaction(transaction2);
+
+			client1.addClientLoan(clientLoan1);
+			loan1.addClientLoan(clientLoan1);
+			client1.addClientLoan(clientLoan2);
+			loan2.addClientLoan(clientLoan2);
+
+
+
+			clientRepository.save(client1);
+			clientRepository.save(client2);
+			clientRepository.save(client3);
+			accountRepository.save(account1);
+			accountRepository.save(account2);
+			accountRepository.save(account3);
 			transactionRepository.save(transaction1);
-
-
-			Transaction transaction2 = new Transaction();
-			transaction2.setType(TransactionType.CREDITO);
-			transaction2.setAmount(-10000);
-			transaction2.setAccount(account2);
-			transaction2.setDate(LocalDateTime.now());
-			transaction2.setDescription("Transaccion hecha desde la cuenta 2");
 			transactionRepository.save(transaction2);
-
-
-
-			Transaction transaction3 = new Transaction();
-			transaction3.setType(TransactionType.DEBITO);
-			transaction3.setAmount(-7000);
-			transaction3.setAccount(account3);
-			transaction3.setDate(LocalDateTime.now());
-			transaction3.setDescription("Transaccion hecha desde la cuenta 3");
-			transactionRepository.save(transaction3);
-
-			Transaction transaction4 = new Transaction();
-			transaction4.setType(TransactionType.CREDITO);
-			transaction4.setAmount(-2000);
-			transaction4.setAccount(account1);
-			transaction4.setDate(LocalDateTime.now());
-			transaction4.setDescription("Transaccion hecha desde la cuenta 1");
-			transactionRepository.save(transaction4);
-
-
-
+			loanRepository.save(loan1);
+			loanRepository.save(loan2);
+			loanRepository.save(loan3);
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
 
 		};
 	}

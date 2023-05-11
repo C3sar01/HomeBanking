@@ -31,21 +31,13 @@ public class Account {
 
     public Account(){}
 
-    public Account(Long id, String number, LocalDateTime creationDate, Double balance) {
-        this.id = id;
+    public Account(String number, LocalDateTime creationDate, Double balance) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNumber() {
         return number;

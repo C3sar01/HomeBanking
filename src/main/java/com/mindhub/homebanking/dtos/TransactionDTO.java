@@ -7,30 +7,37 @@ import java.time.LocalDateTime;
 
 public class TransactionDTO {
 
+    private Long id;
     private TransactionType type;
-
-    private int amount;
-
-    private LocalDateTime date;
-
+    private Double amount;
     private String description;
+    private LocalDateTime date;
 
 
     public TransactionDTO(){}
 
     public TransactionDTO(Transaction transaction) {
+        this.id = transaction.getId();
         this.amount = transaction.getAmount();
+        this.description = transaction.getDescription();
         this.type = transaction.getType();
         this.date = transaction.getDate();
-        this.description = transaction.getDescription();
     }
 
-    public int getAmount() {
-        return amount;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TransactionType getType() {
@@ -41,12 +48,12 @@ public class TransactionDTO {
         this.type = type;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getDescription() {
