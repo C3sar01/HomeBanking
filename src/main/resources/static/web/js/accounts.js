@@ -7,7 +7,7 @@ var app = new Vue({
     },
     methods:{
         getData: function(){
-            axios.get("/api/clients/1")
+            axios.get("/api/clients/current")
             .then((response) => {
                 //get client ifo
                 this.clientInfo = response.data;
@@ -23,7 +23,7 @@ var app = new Vue({
         },
         signOut: function(){
             axios.post('/api/logout')
-            .then(response => window.location.href="/web/index.html")
+            .then(response => window.location.href="/web/html/index.html")
             .catch(() =>{
                 this.errorMsg = "Sign out failed"   
                 this.errorToats.show();

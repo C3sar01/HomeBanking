@@ -1,14 +1,20 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.mindhub.homebanking.utils.CardUtils.getRandomNumber;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -17,6 +23,12 @@ public class ClientController {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     //Obtener clientes
     @GetMapping("/clients")
@@ -31,11 +43,43 @@ public class ClientController {
     }
 
 
-    // Crear un nuevo cliente
-    @PostMapping
-    public ResponseEntity<Client> crearClient(@Validated @RequestBody Client client) {
-        Client nuevoClient = clientRepository.save(client);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoClient);
+    //Nuevo cliente
+    @GetMapping("clients/current")
+    public ClientDTO getClient(Authentication authentication){
+        Client client = this.clientRepository.findByEmail(authentication.getName());
+        return new ClientDTO(client);
+    }
+
+    @PostMapping("/clients")
+    public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
+
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+
+        if (clientRepository.findByEmail(email) !=  null) {
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+        }
+
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(client);
+
+        Account account = new Account("VIN-"+getRandomNumber(10000001,100000000), LocalDateTime.now(),0.00);
+
+        client.addAccount(account);
+
+        accountRepository.save(account);
+
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/web/clients/{id}")
+    public void setStatus(@PathVariable Long id){
+        Client client = clientRepository.findById(id).get();
+        client.setStatus(!client.isStatus());
+        clientRepository.save(client);
     }
 
 

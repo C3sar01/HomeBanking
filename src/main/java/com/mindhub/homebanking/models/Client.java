@@ -17,8 +17,9 @@ public class Client {
     private String lastName;
     @Column(unique = true)
     private String email;
+    private String password;
 
-
+    private boolean status;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     Set<Account> accounts = new HashSet<>();
@@ -29,20 +30,29 @@ public class Client {
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     Set<Card> cards = new HashSet<>();
 
-
     public Client(){}
 
-    public Client(String firstName, String lastName, String email) {
+    public Client(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-
+        this.password = password;
+        this.status = true;
     }
 
 
     public Set<Loan> getLoan(){
         return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toSet());
     }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
@@ -70,6 +80,10 @@ public class Client {
         accounts.add(account);
     }
 
+    public void addCard(Card card) {
+        card.setClient(this);
+        cards.add(card);
+    }
 
     public long getId() {
         return id;
@@ -103,19 +117,21 @@ public class Client {
         this.email = email;
     }
 
-    public Set<Card> getCards() {
-        return cards;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void addCard(Card card) {
-        card.setClient(this);
-        cards.add(card);
+    public boolean isStatus() {
+        return status;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
