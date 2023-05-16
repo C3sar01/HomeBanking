@@ -57,14 +57,14 @@ public class ClientController {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientRepository.findByEmail(email) != null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(client);
 
-        Account account = new Account("VIN-"+getRandomNumber(10000001,100000000), LocalDateTime.now(),0.00);
+        Account account = new Account("VIN-" + getRandomNumber(10000001, 100000000), LocalDateTime.now(), 0.00);
 
         client.addAccount(account);
 
@@ -81,9 +81,6 @@ public class ClientController {
         client.setStatus(!client.isStatus());
         clientRepository.save(client);
     }
-
-
-
 
 
 

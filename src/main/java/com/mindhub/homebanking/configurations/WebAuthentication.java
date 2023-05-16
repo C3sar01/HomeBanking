@@ -31,7 +31,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
             Client client = clientRepository.findByEmail(inputName);
             if (client != null) {
                 if(inputName.contains("@admin.com")){
-                    return new  User(client.getEmail(), client.getPassword(),
+                    return new  User(client.getEmail(), client.getPassword(), //User es una clase de Spring Security que retorna un email y pw
                             AuthorityUtils.createAuthorityList("ADMIN"));
                 }
                 if(client.isStatus()) {
