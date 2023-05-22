@@ -12,7 +12,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
     @GenericGenerator(name = "native",strategy = "native")
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     @Column(unique = true)
@@ -85,11 +85,11 @@ public class Client {
         cards.add(card);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

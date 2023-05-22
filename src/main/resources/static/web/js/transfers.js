@@ -8,7 +8,7 @@ var app = new Vue({
         errorMsg: null,
         accountFromNumber: "VIN",
         accountToNumber: "VIN",
-        transferType: "own",
+        trasnferType: "own",
         amount: 0,
         description: ""
     },
@@ -29,18 +29,18 @@ var app = new Vue({
         },
         checkTransfer: function(){
             if(this.accountFromNumber == "VIN"){
-                this.errorMsg = "You must select an origin account";  
+                this.errorMsg = "You must select an origin account";
                 this.errorToats.show();
             }
             else if(this.accountToNumber == "VIN"){
-                this.errorMsg = "You must select a destination account";  
+                this.errorMsg = "You must select a destination account";
                 this.errorToats.show();
             }else if(this.amount == 0){
-                this.errorMsg = "You must indicate an amount";  
+                this.errorMsg = "You must indicate an amount";
                 this.errorToats.show();
             }
             else if(this.description.length <= 0){
-                this.errorMsg = "You must indicate a description";  
+                this.errorMsg = "You must indicate a description";
                 this.errorToats.show();
             }else{
                 this.modal.show();
@@ -53,12 +53,12 @@ var app = new Vue({
                 }
             }
             axios.post(`/api/transactions?fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}`,config)
-            .then(response => { 
+            .then(response => {
                 this.modal.hide();
                 this.okmodal.show();
             })
             .catch((error) =>{
-                this.errorMsg = error.response.data;  
+                this.errorMsg = error.response.data;
                 this.errorToats.show();
             })
         },
@@ -67,7 +67,7 @@ var app = new Vue({
             this.accountToNumber = "VIN";
         },
         changedFrom: function(){
-            if(this.transferType == "own"){
+            if(this.trasnferType == "own"){
                 this.clientAccountsTo = this.clientAccounts.filter(account => account.number != this.accountFromNumber);
                 this.accountToNumber = "VIN";
             }

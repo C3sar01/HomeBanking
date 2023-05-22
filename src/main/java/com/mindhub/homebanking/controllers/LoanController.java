@@ -42,7 +42,7 @@ public class LoanController {
                                              @RequestBody LoanApplicationDTO loanApplicationDTO){
         //Comprobar si el cliente esta autenticado
         Client clientConnect = clientRepository.findByEmail(authentication.getName());
-        if(clientConnect == null) return new ResponseEntity<>("Client isnt authorization", HttpStatus.FORBIDDEN);
+        if(clientConnect == null) return new ResponseEntity<>("Client its not authenticated", HttpStatus.FORBIDDEN);
         System.out.println(loanApplicationDTO.toString());
 
         //Se verifica que los datos no esten vacios
@@ -63,10 +63,10 @@ public class LoanController {
 
         //Comprobar si la cuenta de destino existe
         Account accountDestino = accountRepository.findByNumber(loanApplicationDTO.getToAccountNumber());
-        if(accountDestino == null) return new ResponseEntity<>("Account dosent exist", HttpStatus.FORBIDDEN);
+        if(accountDestino == null) return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
 
         //Comprobar que la cuenta de destino pertenezca al cliente autenticado
-        if(!clientConnect.getAccounts().contains(accountDestino)) return new ResponseEntity<>("Account dosent exist", HttpStatus.FORBIDDEN);;
+        if(!clientConnect.getAccounts().contains(accountDestino)) return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);;
 
         ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount()*1.2,loanApplicationDTO.getPayments());
 

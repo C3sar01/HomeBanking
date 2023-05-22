@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,7 +70,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="type" class="form-label">Account type</label>
-                                        <select id="type" v-model="transferType" v-on:change="changedType" class="form-select" aria-label="Default select example" required>
+                                        <select id="type" v-model="trasnferType" v-on:change="changedType" class="form-select" aria-label="Default select example" required>
                                             <option value="own">Own accounts</option>
                                             <option value="third">Third party accounts </option>
                                         </select>
@@ -86,10 +86,10 @@
                                     </div>
                                     <div class="col-md">
                                         <label for="to-account" class="form-label">To account</label>
-                                        <template v-if="transferType == 'third'">
+                                        <template v-if="trasnferType == 'third'">
                                             <input id="to-account" type="text" v-model="accountToNumber" class="form-control" placeholder="VIN000554" aria-label="to account">
                                         </template>
-                                        <template v-if="transferType == 'own'">
+                                        <template v-if="trasnferType == 'own'">
                                             <select id="to-account" v-model="accountToNumber" class="form-select" aria-label="Default select example" required>
                                                 <option value="VIN">Open this select menu</option>
                                                 <option v-for="account in clientAccountsTo" v-bind:value="account.number">{{ account.number }} | balance: {{ account.balance }}</option>

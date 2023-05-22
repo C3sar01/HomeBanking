@@ -21,7 +21,7 @@ public class ClientLoan {
     private Client client;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="load_id")
+    @JoinColumn(name="loan_id")
     private Loan loan;
 
     public ClientLoan() {

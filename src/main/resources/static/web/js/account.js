@@ -21,6 +21,22 @@ var app = new Vue({
                 this.errorToats.show();
             })
         },
+         downloadPDF() {
+                    axios.get('/pdf/export', { responseType: 'blob' })
+                        .then(response => {
+                            const url = window.URL.createObjectURL(new Blob([response.data]));
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', 'transactions.pdf');
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                },
+
         formatDate: function(date){
             return new Date(date).toLocaleDateString('en-gb');
         },

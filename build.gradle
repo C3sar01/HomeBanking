@@ -17,10 +17,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.postgresql:postgresql' //Utilizar postgresql
+	//implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.27' //Utilizar postgresql
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+	implementation group: 'com.github.librepdf', name: 'openpdf', version: '1.3.30'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-json', version: '2.7.11'
+	implementation group: 'io.github.flashvayne', name: 'chatgpt-spring-boot-starter', version: '1.0.4'
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
+
+
 	//runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	//implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.0'
+
 }
 
 tasks.named('test') {

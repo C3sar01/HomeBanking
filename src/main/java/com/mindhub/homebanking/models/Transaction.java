@@ -12,7 +12,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
     @GenericGenerator(name = "native",strategy = "native")
-    private long id;
+    private Long id;
     private TransactionType type;
     private Double amount;
     private String description;
@@ -32,6 +32,8 @@ public class Transaction {
 
     }
 
+
+
     public Account getAccount() {
         return account;
     }
@@ -42,11 +44,11 @@ public class Transaction {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
