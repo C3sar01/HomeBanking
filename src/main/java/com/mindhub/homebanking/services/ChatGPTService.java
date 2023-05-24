@@ -35,7 +35,7 @@ public class ChatGPTService {
         ChatGPTRequest chatGPTRequest = new ChatGPTRequest();
         chatGPTRequest.setModel("gpt-3.5-turbo");
         chatGPTRequest.setMessages(List.of(new Message("user", prompt)));
-        chatGPTRequest.setMax_tokens(300);
+        chatGPTRequest.setMax_tokens(500);
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<ChatGPTRequest> request = new HttpEntity<>(chatGPTRequest, headers);

@@ -48,21 +48,54 @@
     height: 30px;
 }
 
-.welcome{
-    background: linear-gradient(45deg,#ee0979,#ff6a00);
+.welcome {
+    background: linear-gradient(45deg, rgba(4, 43, 97, 0.5), rgba(204, 223, 249, 0.5));
 }
+
+
 
 .welcome-logo{
     width: 60%;
 }
 
-.index-body{
-    background-image: url(../img/avila.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-}
+
 
 .index-container{
     margin-top: 10%;
 }
+
+.index-body {
+  position: relative; /* Asegura que el video se superponga correctamente */
+}
+
+body {
+  position: relative;
+  overflow: hidden; /* Evita el desplazamiento del video */
+}
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.login{
+    color: white;
+}
+
+.label {
+    color: white;
+}
+
+.form-control::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+
+
 

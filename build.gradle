@@ -25,10 +25,7 @@ dependencies {
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
 	implementation group: 'io.github.flashvayne', name: 'chatgpt-spring-boot-starter', version: '1.0.4' //Libreria/Dependencia ChatGPT-SpringBoot
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.15.1'
-
-
-
-
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 
 
