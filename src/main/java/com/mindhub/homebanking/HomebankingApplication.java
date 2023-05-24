@@ -24,6 +24,7 @@ public class HomebankingApplication {
 //
 //	@Autowired
 //	private TransactionService transactionService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
