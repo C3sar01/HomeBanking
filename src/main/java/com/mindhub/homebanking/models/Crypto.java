@@ -6,10 +6,7 @@ public class Crypto {
     private double current_price;
     private double price_change_percentage_24h;
     private String image;
-
-
     /*  ************************  */
-
     public Crypto(long market_cap_rank, String name, String symbol, double current_price, double price_change_percentage_24h, String image) {
         this.market_cap_rank = market_cap_rank;
         this.name = name;
