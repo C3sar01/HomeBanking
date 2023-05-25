@@ -66,3 +66,32 @@
     margin-top: 10%;
 }
 
+/************************************************************/
+.banner-container {
+    display: flex;
+   /* overflow: hidden;*/
+    width: 100%;
+    animation: bannerAnimation 20s linear infinite;
+    /*background-color: #646463;*/
+}
+
+.banner-item {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.banner-item:last-child {
+    margin-right: 0;
+}
+
+@keyframes bannerAnimation {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(calc(-100% + 20px));
+    }
+}
+.img-crypto{
+     max-width: 20px;
+ }
