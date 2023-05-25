@@ -101,4 +101,9 @@ public class Account {
                 '}';
     }
 
+    public void addTransactions(Transaction transaction) {
+        transaction.setAccount(this);
+        transactions.add(transaction);
+    }
+
 }

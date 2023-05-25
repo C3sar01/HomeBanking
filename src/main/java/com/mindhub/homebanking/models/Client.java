@@ -20,6 +20,7 @@ public class Client {
     private String password;
 
     private boolean status;
+    private int points;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     Set<Account> accounts = new HashSet<>();
@@ -38,6 +39,7 @@ public class Client {
         this.email = email;
         this.password = password;
         this.status = true;
+        this.points = points;
     }
 
 
@@ -140,5 +142,13 @@ public class Client {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

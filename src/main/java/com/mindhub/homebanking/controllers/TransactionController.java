@@ -2,10 +2,12 @@ package com.mindhub.homebanking.controllers;
 
 import com.lowagie.text.DocumentException;
 import com.mindhub.homebanking.dtos.TransactionDTO;
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
+import com.mindhub.homebanking.models.TransactionType.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
@@ -18,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import static java.util.stream.Collectors.toList;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -116,15 +119,38 @@ public class TransactionController {
         PDFGenerator exporter = new PDFGenerator(transactionDTOList);
         exporter.export(response);
     }
+    @Transactional
+    @PostMapping("/pointsTransaction")
+    public String pointsTransaction(@RequestParam Long id, @RequestBody double amount, @RequestParam String fromAccountNumber,Authentication authentication) {
+        //Client client = clientRepository.findById(id).orElse(null);
+        Client client = clientRepository.findByEmail(authentication.getName());
+        Account originAccount = this.accountRepository.findByNumber(fromAccountNumber);
+
+        if (client != null) {
+            int points = (int) (amount / 1000);
+
+            Transaction transaction = new Transaction();
+            transaction.setType(TransactionType.CREDITO);
+            transaction.setAmount(amount);
+            transaction.setDescription("Transacción realizada");
+            transaction.setDate(LocalDateTime.now());
+            transaction.setAccount(originAccount);
+            transactionRepository.save(transaction);
+
+            client.setPoints(client.getPoints() + points);
+            originAccount.addTransactions(transaction);
+            clientRepository.save(client);
 
 
+            return "Transacción exitosa. Puntos acumulados: " + client.getPoints();
+        }
+        return "Usuario no encontrado";
+    }
 
-
-
-
-
-
-
+    @GetMapping("/pointsTransaction/current")
+    public List<ClientDTO> getPointsTransaction() {
+        return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
+    }
 
 }
 
