@@ -19,11 +19,14 @@ import java.util.List;
 @SpringBootApplication
 public class HomebankingApplication {
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private TransactionService transactionService;
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
+//
+//	@Autowired
+//	private TransactionService transactionService;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}

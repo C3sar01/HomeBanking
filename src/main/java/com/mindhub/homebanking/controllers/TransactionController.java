@@ -147,10 +147,12 @@ public class TransactionController {
         return "Usuario no encontrado";
     }
 
+
     @GetMapping("/pointsTransaction/current")
     public List<ClientDTO> getPointsTransaction() {
         return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
     }
+
 
 }
 

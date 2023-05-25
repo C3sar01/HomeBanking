@@ -9,7 +9,7 @@
 }
 
 .plastic-card__part {
-    box-shadow: 1px 1px #aaa3a3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
     top: 0;
     position: absolute;
     z-index: 1000;
@@ -30,16 +30,19 @@
     -moz-backface-visibility: hidden;
 }
 
-.gold-plastic-card{
-    background: linear-gradient(45deg,#ecad36,#bea328);
+.gold-plastic-card {
+    background: linear-gradient(45deg, #ecad36, #bea328);
+    background-image: linear-gradient(45deg, #ecad36, #bea328);
 }
 
-.silver-plastic-card{
-    background: linear-gradient(45deg,#adadad,#646463);
+.silver-plastic-card {
+    background: linear-gradient(45deg, #adadad, #646463);
+    background-image: linear-gradient(45deg, #adadad, #646463);
 }
 
-.titanium-plastic-card{
-    background: linear-gradient(45deg,#6ea3e0,#185781);
+.titanium-plastic-card {
+    background: linear-gradient(45deg, #6ea3e0, #185781);
+    background-image: linear-gradient(45deg, #6ea3e0, #185781);
 }
 
 
@@ -158,7 +161,6 @@
 .plastic-card:hover .plastic-card__front {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
-
 }
 
 .plastic-card:hover .plastic-card__back {
