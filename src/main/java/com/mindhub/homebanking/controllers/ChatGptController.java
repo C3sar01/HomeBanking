@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class ChatGPTController {
+public class ChatGptController {
 
     private ChatGPTService chatGPTService;
 
     @Autowired
     private AccountRepository accountRepository;
 
-    public ChatGPTController(ChatGPTService chatGPTService, AccountRepository accountRepository) {
+    public ChatGptController(ChatGPTService chatGPTService, AccountRepository accountRepository) {
         this.chatGPTService = chatGPTService;
         this.accountRepository = accountRepository;
     }

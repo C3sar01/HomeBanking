@@ -56,43 +56,52 @@ public class TransactionController {
                                                      @RequestParam String description) {
 
 
-        Client clientConnect = clientRepository.findByEmail(authentication.getName());
-        if (clientConnect == null) return new ResponseEntity<>("Client isn't authorization", HttpStatus.FORBIDDEN);
+            Client clientConnect = clientRepository.findByEmail(authentication.getName());
+            if (clientConnect == null) return new ResponseEntity<>("Client isn't authorization", HttpStatus.FORBIDDEN);
 
-        if (amount == null || description.isEmpty() || fromAccountNumber.isEmpty() || toAccountNumber.isEmpty())
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            if (amount == null || description.isEmpty() || fromAccountNumber.isEmpty() || toAccountNumber.isEmpty())
+                return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
 
-        if (fromAccountNumber.equals(toAccountNumber))
-            return new ResponseEntity<>("Accounts must be not the same", HttpStatus.FORBIDDEN);
+            if (fromAccountNumber.equals(toAccountNumber))
+                return new ResponseEntity<>("Accounts must be not the same", HttpStatus.FORBIDDEN);
 
-        Account accountOrigen = accountRepository.findByNumber(fromAccountNumber);
-        Account accountDestino = accountRepository.findByNumber(toAccountNumber);
+            Account accountOrigen = accountRepository.findByNumber(fromAccountNumber);
+            Account accountDestino = accountRepository.findByNumber(toAccountNumber);
 
-        if (accountOrigen == null) return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
-        if (accountDestino == null) return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
+            if (accountOrigen == null) return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
+            if (accountDestino == null) return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
 
-        if (accountOrigen.getClient() != clientConnect)
-            return new ResponseEntity<>("Change the account", HttpStatus.FORBIDDEN);
+            if (accountOrigen.getClient() != clientConnect)
+                return new ResponseEntity<>("Change the account", HttpStatus.FORBIDDEN);
 
-        if (accountOrigen.getBalance() < amount)
-            return new ResponseEntity<>("Your Balance isnt enougth", HttpStatus.FORBIDDEN);
+            if (accountOrigen.getBalance() < amount)
+                return new ResponseEntity<>("Your Balance isnt enougth", HttpStatus.FORBIDDEN);
 
-        Transaction transactionOrigen = new Transaction(TransactionType.DEBITO, amount * (-1), description + " - Cuenta: " + fromAccountNumber, LocalDateTime.now());
-        Transaction transactionDestino = new Transaction(TransactionType.CREDITO, amount, description + " - Cuenta: " + toAccountNumber, LocalDateTime.now());
+            int points = (int) (amount / 1000);
+            clientConnect.setPoints(clientConnect.getPoints() + points);
+            clientRepository.save(clientConnect);
+            System.out.println("Transacción exitosa. Puntos acumulados: " + clientConnect.getPoints());
 
-        accountOrigen.addTransaction(transactionOrigen);
-        accountDestino.addTransaction(transactionDestino);
+            Transaction transactionOrigen = new Transaction(TransactionType.DEBITO, amount * (-1), description + " - Cuenta: " + fromAccountNumber, LocalDateTime.now());
+            Transaction transactionDestino = new Transaction(TransactionType.CREDITO, amount, description + " - Cuenta: " + toAccountNumber, LocalDateTime.now());
 
-        transactionRepository.save(transactionOrigen);
-        transactionRepository.save(transactionDestino);
+            accountOrigen.addTransaction(transactionOrigen);
+            accountDestino.addTransaction(transactionDestino);
 
-        accountOrigen.setBalance(accountOrigen.getBalance() - amount);
-        accountDestino.setBalance(accountDestino.getBalance() + amount);
+            transactionRepository.save(transactionOrigen);
+            transactionRepository.save(transactionDestino);
 
-        accountRepository.save(accountOrigen);
-        accountRepository.save(accountDestino);
+            accountOrigen.setBalance(accountOrigen.getBalance() - amount);
+            accountDestino.setBalance(accountDestino.getBalance() + amount);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+            accountRepository.save(accountOrigen);
+            accountRepository.save(accountDestino);
+
+            //return new ResponseEntity<>(HttpStatus.CREATED);
+            //Account originAccount = this.accountRepository.findByNumber(fromAccountNumber);
+
+        return ResponseEntity.ok("Transacción exitosa. Puntos acumulados: " + clientConnect.getPoints());
+
     }
 
     //Exportar cartola en PDF
@@ -119,40 +128,43 @@ public class TransactionController {
         PDFGenerator exporter = new PDFGenerator(transactionDTOList);
         exporter.export(response);
     }
-    @Transactional
-    @PostMapping("/pointsTransaction")
-    public String pointsTransaction(@RequestParam Long id, @RequestBody double amount, @RequestParam String fromAccountNumber,Authentication authentication) {
-        //Client client = clientRepository.findById(id).orElse(null);
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Account originAccount = this.accountRepository.findByNumber(fromAccountNumber);
-
-        if (client != null) {
-            int points = (int) (amount / 1000);
-
-            Transaction transaction = new Transaction();
-            transaction.setType(TransactionType.CREDITO);
-            transaction.setAmount(amount);
-            transaction.setDescription("Transacción realizada");
-            transaction.setDate(LocalDateTime.now());
-            transaction.setAccount(originAccount);
-            transactionRepository.save(transaction);
-
-            client.setPoints(client.getPoints() + points);
-            originAccount.addTransactions(transaction);
-            clientRepository.save(client);
-
-
-            return "Transacción exitosa. Puntos acumulados: " + client.getPoints();
-        }
-        return "Usuario no encontrado";
-    }
-
+//    @Transactional
+//    @PostMapping("/pointsTransaction")
+//    public String pointsTransaction(@RequestParam double amount, @RequestParam String accountFromNumber,Authentication authentication) {
+//
+//        Client client = clientRepository.findByEmail(authentication.getName());
+//        Account originAccount = this.accountRepository.findByNumber(accountFromNumber);
+//
+//        if (client != null) {
+//            int points = (int) (amount / 1000);
+//
+//            Transaction transaction = new Transaction();
+//            transaction.setType(TransactionType.CREDITO);
+//            transaction.setAmount(amount);
+//            transaction.setDescription("Transacción realizada");
+//            transaction.setDate(LocalDateTime.now());
+//            transaction.setAccount(originAccount);
+//            transactionRepository.save(transaction);
+//
+//            client.setPoints(client.getPoints() + points);
+//            originAccount.addTransactions(transaction);
+//            clientRepository.save(client);
+//
+//
+//            return "Transacción exitosa. Puntos acumulados: " + client.getPoints();
+//        }
+//        return "Usuario no encontrado";
+//    }
 
     @GetMapping("/pointsTransaction/current")
-    public List<ClientDTO> getPointsTransaction() {
-        return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
+    public ResponseEntity<ClientDTO> getPointsTransaction(Authentication authentication) {
+        Client client = this.clientRepository.findByEmail(authentication.getName());
+        if (client != null) {
+            ClientDTO clientDTO = new ClientDTO(client);
+            return ResponseEntity.ok(clientDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-
 }
 
