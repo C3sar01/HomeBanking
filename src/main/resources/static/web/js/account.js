@@ -4,6 +4,10 @@ var app = new Vue({
         accountInfo: {},
         errorToats: null,
         errorMsg: null,
+        chatGPTData: null,
+        loading: false, // Nueva propiedad para controlar el estado de carga
+
+
     },
     methods:{
         getData: function(){
@@ -35,7 +39,7 @@ var app = new Vue({
                         .catch(error => {
                             console.error(error);
                         });
-                },
+         },
 
         formatDate: function(date){
             return new Date(date).toLocaleDateString('en-gb');
@@ -48,6 +52,26 @@ var app = new Vue({
                 this.errorToats.show();
             })
         },
+
+        openModal() {
+          this.loading = true;
+          this.getChatGPTData(); // Llamar a la función para obtener los datos del backend
+        },
+
+        getChatGPTData() {
+          axios.post('/chat', { accountNumber: this.accountInfo.number })
+            .then(response => {
+              console.log(this.accountInfo.number);
+              this.chatGPTData = response.data.choices[0].message.content;
+              $('#chatModal').modal('show');
+              this.loading = false;
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        },
+
+
     },
     mounted: function(){
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));

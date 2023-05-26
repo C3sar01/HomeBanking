@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -68,39 +69,5 @@ public class ChatGPTController {
                 "de un mal comportamiento financiero";
         return prompt;
     }
-
-//    private double calculateCustomerScore(String accountNumber) {
-//        Account account = accountRepository.findByNumber(accountNumber);
-//        List<TransactionDTO> transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
-//
-//        int debitCount = 0;
-//        int creditCount = 0;
-//
-//        for (TransactionDTO transaction : transactions) {
-//            if (transaction.getType() == TransactionType.DEBITO) {
-//                debitCount++;
-//            } else if (transaction.getType() == TransactionType.CREDITO) {
-//                creditCount++;
-//            }
-//        }
-//
-//        return calculateScoreFromCounts(debitCount, creditCount);
-//    }
-//
-//    private double calculateScoreFromCounts(int debitCount, int creditCount) {
-//        int totalTransactions = debitCount + creditCount;
-//        if (totalTransactions == 0) {
-//            return 5.0; // Puntaje neutral si no hay transacciones
-//        }
-//
-//        double debitRatio = (double) debitCount / totalTransactions; //Es la proporción de transacciones de débito con respecto al total de transacciones. Se calcula dividiendo el número de transacciones de débito (debitCount) entre el total de transacciones (totalTransactions).
-//        double creditRatio = (double) creditCount / totalTransactions; //Es la proporción de transacciones de crédito con respecto al total de transacciones. Se calcula dividiendo el número de transacciones de crédito (creditCount) entre el total de transacciones (totalTransactions).
-//
-//        double customerScore = 1 + 9 * creditRatio;// Escala del 1 al 10
-//        System.out.println(customerScore);
-//        return customerScore;
-//    }
-
-
 
 }
