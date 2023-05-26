@@ -109,8 +109,6 @@ public class TransactionController {
         String headerValue = "attachment; filename=pdf" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        //List<TransactionDTO> transactionDTOList = transactionService.findAllTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
-
         List<TransactionDTO> transactionDTOList = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
 
         PDFGeneratorService exporter = new PDFGeneratorService(transactionDTOList);

@@ -6,19 +6,14 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.mindhub.homebanking.dtos.TransactionDTO;
-import com.lowagie.text.Image;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 @Service
 public class PDFGeneratorService {
-
-    private MailService mailService;
     private List<TransactionDTO> listTransactionDTO;
 
     public PDFGeneratorService(List<TransactionDTO> listTransactionDTO) {

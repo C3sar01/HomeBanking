@@ -38,7 +38,7 @@ dependencies {
 
 	/********/
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'javax.persistence:javax.persistence-api'
+	implementation 'javax.mail:javax.mail-api'
 
 }
 
