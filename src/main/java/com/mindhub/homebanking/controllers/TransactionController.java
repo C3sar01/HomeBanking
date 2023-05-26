@@ -9,9 +9,8 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
-import com.mindhub.homebanking.services.EmailService;
+import com.mindhub.homebanking.services.PDFGeneratorService;
 import com.mindhub.homebanking.services.TransactionService;
-import com.mindhub.homebanking.utils.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,8 +42,6 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
-    @Autowired
-    private EmailService emailService;
 
     //Servicio para la transferencia de dinero entre cuentas propias y a terceros
     @Transactional
@@ -117,11 +113,8 @@ public class TransactionController {
 
         List<TransactionDTO> transactionDTOList = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
 
-        PDFGenerator exporter = new PDFGenerator(transactionDTOList);
-        /*File file = exporter.export(response);*/
-
-       /* // Llamada al servicio de correo electrónico para enviar el archivo PDF
-        emailService.sendListEmail(emailTo, file);*/
+        PDFGeneratorService exporter = new PDFGeneratorService(transactionDTOList);
+        exporter.export(response);
     }
 
 

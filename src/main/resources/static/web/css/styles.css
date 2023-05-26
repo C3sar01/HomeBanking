@@ -69,7 +69,7 @@
 /************************************************************/
 .banner-container {
     display: flex;
-   /* overflow: hidden;*/
+    /*overflow: hidden;*/
     width: 100%;
     animation: bannerAnimation 20s linear infinite;
     /*background-color: #646463;*/
