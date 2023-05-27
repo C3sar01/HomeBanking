@@ -118,5 +118,8 @@ font-weight: 500;
 h2{
     margin-top: 14px;
 }
+.modal-body{
+border:border: 1px solid #000000;
+}
 
 

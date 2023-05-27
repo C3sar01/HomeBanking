@@ -78,12 +78,10 @@
                             <tr>{{ clientInfo.firstName }}</tr><p> you have </p>
                             <tr>{{ clientInfo.points }}</tr><p> accumulated</p>
 
-                        <h2>Sistema de Canjeo de Puntos</h2>
+                        <h2>Points exchange system</h2>
                         <div class="container-form-result">
                             <div class="container-form">
-                                <div  class="resultado" v-if="resultado">
-                                    <p>Tines {{ totalPuntos }} acumulados</p>
-                                </div>
+
                                 <form @submit.prevent="canjearPuntos">
 
                                     <div class="row mt-3">
@@ -101,20 +99,14 @@
                                             </div>
                                             <div class="col-md" style="margin:29px">
 
-                                    <button class="btn btn-primary" type="submit">Canjear</button>
+                                    <button class="btn btn-primary" v-on:click="getProducts" type="submit">Exchange</button>
                                                     </div>
                                         </div>
                                         </div>
                                 </form>
 
                             </div>
-                            <div class="container-resultados">
-                                <div class="resultado" v-if="resultado">
-                                    <p>¡Canje exitoso!</p>
-                                    <p>Tarjeta: {{ numeroTarjeta }}</p>
-                                    <p>Puntos Canjeados: {{ puntos }}</p>
-                                </div>
-                            </div>
+
                         </div>
 
                     </div>
@@ -122,6 +114,37 @@
             </div>
         </div>
     </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="okModal" tabindex="-1" aria-labelledby="okModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="okModalLabel">Stores available</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Select a kind of product! <i class="bi bi-check-circle-fill text-success"></i>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Kind of product</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="product in products">
+                            <td>{{ product.name }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" v-on:click="finish" class="btn btn-sm btn-outline-success" data-bs-dismiss="modal">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
