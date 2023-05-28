@@ -52,7 +52,7 @@ var app = new Vue({
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             }
-            axios.post(`/api/transactions?fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}`,config)
+            axios.post(`/api/transactions?fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}&`,config)
             .then(response => {
                 this.modal.hide();
                 this.okmodal.show();
@@ -83,7 +83,24 @@ var app = new Vue({
                 this.errorToats.show();
             })
         },
-    },
+
+        pointsTransaction: function() {
+              let config = {
+                  headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                  }
+                };
+                axios.post(`/api/pointsTransaction?amount=${this.amount}&accountFromNumber=${this.accountFromNumber}`, config)
+                .then(function (response) {
+                  console.log(response.data);
+                })
+                .catch(function (error) {
+                  console.error(error);
+                });
+            },
+        },
+
+
     mounted: function(){
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.modal = new bootstrap.Modal(document.getElementById('confirModal'));

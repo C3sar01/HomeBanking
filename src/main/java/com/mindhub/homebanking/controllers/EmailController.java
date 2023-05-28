@@ -1,76 +1,91 @@
 package com.mindhub.homebanking.controllers;
 
-import com.lowagie.text.DocumentException;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.services.MailService;
-import com.mindhub.homebanking.services.PDFGeneratorService;
+import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.utils.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.ByteArrayInputStream;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/mail")
 public class EmailController {
-    @Autowired
-    private MailService mailService;
 
-    @Autowired
-    public EmailController(MailService mailService) {
-        this.mailService = mailService;
-    }
     @Autowired
     private AccountRepository accountRepository;
-    @GetMapping("/sendPdf")
-    public void generatePDF(HttpServletResponse response,
-                            @RequestParam(required = true) String accountNumber)
-            throws DocumentException, IOException {
 
-        Account account = accountRepository.findByNumber(accountNumber);
+    @Autowired
+    private ClientRepository clientRepository;
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    @Autowired
+    private TransactionRepository transactionRepository;
 
-        // Generar el PDF y almacenarlo en el ByteArrayOutputStream
-        PDFGeneratorService pdfGenerator = new PDFGeneratorService(account.getTransactions().stream()
-                .map(TransactionDTO::new).collect(Collectors.toList()));
+    private final JavaMailSender javaMailSender;
 
-        pdfGenerator.export(response);
-
-        // Configurar la respuesta HTTP
-        response.setContentType("application/pdf");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-ddHH-mm-ss");
-        String currentDateTime = dateFormat.format(new Date());
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=pdf" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        // Enviar el PDF al servicio de JavaMailer
-        byte[] pdfBytes = outputStream.toByteArray();
-        mailService.sendEmailWithAttachment(pdfBytes);
-
-        // Cerrar el flujo de salida
-        outputStream.close();
+    public EmailController(JavaMailSender javaMailSender, TransactionRepository transactionRepository) {
+        this.javaMailSender = javaMailSender;
+        this.transactionRepository = transactionRepository;
     }
-    private String savePDFInServer(byte[] pdfData) throws IOException {
-        String filePath = "F:\\"; // Especifica la ruta donde deseas guardar el archivo en el servidor
 
-        try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            fos.write(pdfData);
-        } catch (IOException e) {
-            // Manejar el error de escritura del archivo según tus necesidades
-            e.printStackTrace();
+    @GetMapping("/send-email")
+    public ResponseEntity<String> sendEmail(HttpServletResponse response, @RequestParam String accountNumber) {
+        try {
+            // Obtener la cuenta
+            Account account = accountRepository.findByNumber(accountNumber);
+
+            // Obtener la lista de transacciones
+            List<TransactionDTO> transactionDTOList = account.getTransactions().stream()
+                    .map(TransactionDTO::new)
+                    .collect(Collectors.toList());
+
+            // Generar el PDF utilizando PDFGenerator
+            PDFGenerator pdfGenerator = new PDFGenerator(transactionDTOList);
+            byte[] pdfBytes = pdfGenerator.export();
+
+            // Preparar el archivo adjunto
+            ByteArrayResource attachment = new ByteArrayResource(pdfBytes) {
+                @Override
+                public String getFilename() {
+                    return "transactions.pdf";
+                }
+            };
+
+            // Preparar el mensaje de correo
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo("cesar.cssoto@gmail.com"); // Reemplaza con la dirección de correo del destinatario
+            helper.setSubject("Transactions");
+            helper.setText("Adjunto encontrarás el archivo PDF con las transacciones.");
+
+            // Adjuntar el archivo PDF
+            helper.addAttachment(attachment.getFilename(), attachment);
+
+            // Enviar el correo electrónico
+            javaMailSender.send(message);
+
+            return ResponseEntity.ok("Correo enviado exitosamente.");
+        } catch (Exception e) {
+            // Manejo de errores
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al enviar el correo electrónico.");
         }
-
-        return filePath;
     }
-
 
 }
+

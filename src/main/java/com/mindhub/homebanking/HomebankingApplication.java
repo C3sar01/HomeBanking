@@ -21,9 +21,14 @@ public class HomebankingApplication {
 
 /*	@Autowired
 	PasswordEncoder passwordEncoder;*/
+
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
 //
 //	@Autowired
 //	private TransactionService transactionService;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
@@ -39,6 +44,12 @@ public class HomebankingApplication {
 			/*Client client1 = new Client("Melba", "Lorenzo", "melba@gmail.com",passwordEncoder.encode("1234"));
 			Client client2 = new Client("Admin", "Admin", "admin@gmail.com",passwordEncoder.encode("1234"));
 			Client client3 = new Client("root", "rootLasName", "root@gmail.com",passwordEncoder.encode("1234"));
+=======
+			//Clientes
+//			Client client1 = new Client("Melba", "Lorenzo", "melba@gmail.com",passwordEncoder.encode("1234"));
+//			Client client2 = new Client("Admin", "Admin", "admin@gmail.com",passwordEncoder.encode("1234"));
+//			Client client3 = new Client("root", "rootLasName", "root@gmail.com",passwordEncoder.encode("1234"));
+>>>>>>> origin/feature/sistema-de-puntos/mn
 //
 //			//Cuentas
 			Account account1 = new Account("VIN001",LocalDateTime.now(),5000.00);
@@ -84,22 +95,31 @@ public class HomebankingApplication {
 //
 //
 //
-			clientRepository.save(client1);
-			clientRepository.save(client2);
-			clientRepository.save(client3);
-			accountRepository.save(account1);
-			accountRepository.save(account2);
-			accountRepository.save(account3);
-			transactionRepository.save(transaction1);
-			transactionRepository.save(transaction2);
-			loanRepository.save(loan1);
-			loanRepository.save(loan2);
-			loanRepository.save(loan3);
-			clientLoanRepository.save(clientLoan1);
-			clientLoanRepository.save(clientLoan2);
-			cardRepository.save(card1);
-			cardRepository.save(card2);
-			cardRepository.save(card3);
+//			clientRepository.save(client1);
+//			clientRepository.save(client2);
+//			clientRepository.save(client3);
+//   		accountRepository.save(account1);
+//			accountRepository.save(account2);
+//			accountRepository.save(account3);
+//			transactionRepository.save(transaction1);
+//			transactionRepository.save(transaction2);
+//			loanRepository.save(loan1);
+//			loanRepository.save(loan2);
+//			loanRepository.save(loan3);
+//			clientLoanRepository.save(clientLoan1);
+//			clientLoanRepository.save(clientLoan2);
+//			cardRepository.save(card1);
+//			cardRepository.save(card2);
+//			cardRepository.save(card3);
+//
+//			for (int i = 0; i < 11; i++) {
+//				Transaction transaction = new Transaction();
+//				transaction.setDate(LocalDateTime.now());
+//				transaction.setDescription("Compras");
+//				transaction.setAmount(20000.00);
+//				transaction.setType(TransactionType.CREDITO);
+//				transactionRepository.save(transaction);
+//			}
 
 			for (int i = 0; i < 11; i++) {
 				Transaction transaction = new Transaction();
