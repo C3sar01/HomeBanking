@@ -14,7 +14,9 @@ import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.TransactionService;
 import com.mindhub.homebanking.utils.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -106,27 +108,31 @@ public class TransactionController {
 
     //Exportar cartola en PDF
     @GetMapping("/pdf")
-    public void generatePDF(HttpServletResponse response,
-                            @RequestParam(required = true) String accountNumber)
-            throws DocumentException,IOException{
+    public ResponseEntity<byte[]> generatePDF(@RequestParam(required = true) String accountNumber) {
+        try {
+            Account account = accountRepository.findByNumber(accountNumber);
 
-        Account account = accountRepository.findByNumber(accountNumber);
+            if (account == null) {
+                return ResponseEntity.notFound().build();
+            }
 
+            List<TransactionDTO> transactionDTOList = account.getTransactions().stream()
+                    .map(TransactionDTO::new)
+                    .collect(Collectors.toList());
 
-        response.setContentType("application/pdf");
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
+            PDFGenerator exporter = new PDFGenerator(transactionDTOList);
+            byte[] pdfBytes = exporter.export();
 
-        String currentDateTime = dateFormat.format(new Date());
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=pdf" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "transactions.pdf");
 
-        //List<TransactionDTO> transactionDTOList = transactionService.findAllTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
-
-        List<TransactionDTO> transactionDTOList = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
-
-        PDFGenerator exporter = new PDFGenerator(transactionDTOList);
-        exporter.export(response);
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 //    @Transactional
 //    @PostMapping("/pointsTransaction")
@@ -166,5 +172,6 @@ public class TransactionController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
 
