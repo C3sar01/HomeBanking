@@ -125,7 +125,7 @@
                 <img class="img-crypto" :src="crypto.image">
                 {{ crypto.name }}  {{ crypto.current_price }} | {{ crypto.price_change_percentage_24h }}
             </div>
-            <div class="banner-item" v-for="crypto in cryptos" :key="crypto.market_cap_rank">
+            <div class="banner-item" v-for="crypto in cryptos" :key="crypto.id">
                 <img class="img-crypto" :src="crypto.image">
                 {{ crypto.name }}  {{ crypto.current_price }} | {{ crypto.price_change_percentage_24h }}
             </div>
