@@ -1,0 +1,6 @@
+spring:
+  messages:
+    basename: messages
+  mvc:
+    locale-resolver: fixed
+    locale: es
