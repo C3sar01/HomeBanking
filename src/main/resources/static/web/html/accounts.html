@@ -126,6 +126,11 @@
     </div>
     <!--*******************************-->
     <br>
+    <div class="divisas">
+        <div v-for="indicador in indicadores" :key="indicador.codigo" class="divisa">
+            <b>{{ indicador.nombre }}</b>: {{ indicador.valor }}(pesos)
+        </div>
+    </div>
     <br>
     <div>
         <div class="banner-container">
