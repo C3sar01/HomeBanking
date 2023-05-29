@@ -44,8 +44,8 @@
 }
 
 .menu-logo{
-    width: 30px;
-    height: 30px;
+    width: 90px;
+    height: 90px;
 
 }
 
@@ -143,6 +143,7 @@ body {
 
 .chat-logo:hover {
   cursor: pointer;
+
 }
 
 .loading {
@@ -158,46 +159,31 @@ body {
   }
 }
 
-button {
-  background: #fff;
-  border: none;
-  padding: 10px 20px;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 600;
-  width: 120px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transform: skew(-21deg);
+#chatContainer {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
-span {
-  display: inline-block;
-  transform: skew(21deg);
+#chatText {
+  animation: fadeIn 0.3s linear;
 }
 
-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 100%;
-  left: 0;
-  background: rgb(20, 20, 20);
-  opacity: 0;
-  z-index: -1;
-  transition: all 0.5s;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.robot{
+    width: 80px;
+    height: 80px;
 }
 
-button:hover {
-  color: #fff;
-}
 
-button:hover::before {
-  left: 0;
-  right: 0;
-  opacity: 1;
-}
 
 
 

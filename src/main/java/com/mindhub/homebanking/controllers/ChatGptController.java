@@ -45,7 +45,7 @@ public class ChatGptController {
         objectMapper.registerModule(new JavaTimeModule());
         //Le pasa transactions para convertir
         String jsonTransactions = objectMapper.writeValueAsString(transactions);
-        //Pasa json al promt y posteriormente genera la respuesta
+        //Pasa json al prompt y posteriormente genera la respuesta
         String prompt = generatePrompt(jsonTransactions);
         ChatGPTResponse chatGPTResponse = chatGPTService.getChatCPTResponse(prompt);
 
@@ -56,17 +56,18 @@ public class ChatGptController {
     }
     //Método que recibe el json con transacciones y genera el Promt.
     private String generatePrompt(String jsonTransactions ) {
-        String prompt = "Puntaje del cliente: " + jsonTransactions;
-        prompt += "Comportate como asesor financiero y realiza un calculo en base a las transacciones obtenidas de tipo credito y " +
-                "debito, asignando un puntaje al cliente en una escala del 1 al 10..." +
-                "Si posee más transacciones debito, su puntaje será menor, por ende deberás " +
-                "entregar de manera breve recomendaciones sobre como ahorrar dinero," +
-                "en cambio, si el cliente posee mayor cantidad de transferencias con credito, se le asignará un puntaje más alto y " +
-                "le debes dar recomendaciones" +
-                "sobre como invertir su dinero, además felicitalo. Un puntaje mayor a 5 implica que tiene más credito, osea un puntaje alto." +
-                "Un puntaje menor a 5 implica mayor cantidad de debito, osea un puntaje bajo. Además, si posee un puntaje bajo da a conocer " +
-                "las consecuencias" +
-                "de un mal comportamiento financiero";
+        String prompt = "Puntaje obtenido" + jsonTransactions;
+        prompt += "Actúa como un Asesor financiero. Realiza la siguiente tarea: Evaluar la lista de transacciones de tipo debito y credito, asignando un puntaje " +
+                "en una escala del 1 al 10 en base a una proporción de transacciones totales." +
+                "Si tengo más transacciones de debito, me debes asignar " +
+                "menor puntaje y darme recomendaciones de ahorro y las consecuencias de un mal manejo financiero. Pero si tengo mayor cantidad de " +
+                "transacciones de credito, " +
+                "se me debe asignar un mayor puntaje y darme " +
+                "una lista de 5 recomendaciones de como invertir mi dinero y felicitarme. " +
+                "La respuesta está dirigida a: A un cliente. " +
+                "Recuerda ser breve y no extenderte demasiado con el texto." +
+                "Recuerda dar recomendaciones de ahorro solo en el caso de que el puntaje sea menor a 5." +
+                "Si el puntaje es mayor a 5, solamente dar recomendaciones de inversión";
         return prompt;
     }
 
