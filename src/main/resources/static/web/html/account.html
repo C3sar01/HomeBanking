@@ -86,9 +86,17 @@
                     <div class="col">
                         <h1 class="display-1">Account details</h1>
                         <button class="btn btn-primary" @click="downloadPDF">Download PDF</button>
-                        <button class="btn btn-primary" @click="pDF">Send pdf to email</button>
+                        <button class="btn btn-primary" @click="sendPdf">Send pdf to email</button>
                         <!--<button class="btn btn-primary bi bi-envelope"> Send by e-mail</button>-->
                     </div>
+
+                    <div id="success-toast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body"></div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+
 
                 </div>
                 <div class="row mt-3">
