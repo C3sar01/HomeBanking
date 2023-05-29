@@ -4,6 +4,7 @@ import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+
 import com.lowagie.text.pdf.PdfWriter;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 
@@ -20,8 +21,10 @@ public class PDFGenerator {
         this.listTransactionDTO = listTransactionDTO;
     }
 
+
     public byte[] export() throws DocumentException, IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, byteArrayOutputStream);
@@ -74,6 +77,7 @@ public class PDFGenerator {
 
         cell.setPhrase(new Phrase("Amount", font));
         table.addCell(cell);
+
     }
 
     private void writeTableData(PdfPTable table) {

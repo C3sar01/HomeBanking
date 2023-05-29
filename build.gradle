@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+
 group = 'com.mindhub'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -13,11 +14,18 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.27' //Utilizar postgresql
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
 	//implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 	implementation group: 'com.github.librepdf', name: 'openpdf', version: '1.3.30'
@@ -40,6 +48,10 @@ dependencies {
 
 	//runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	/********/
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'javax.mail:javax.mail-api'
 
 }
 

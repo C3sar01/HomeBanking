@@ -100,7 +100,7 @@
                                             </div>
                                             <div class="col-md" style="margin:29px">
 
-                                    <button class="btn btn-primary" v-on:click="getProducts" type="submit">Exchange</button>
+                                    <button class="btn btn-primary" v-on:click="getTranslatedProducts" type="submit">Exchange</button>
                                                     </div>
                                         </div>
                                         </div>
@@ -127,21 +127,19 @@
                 <div class="modal-body">
                     Select a kind of product! <i class="bi bi-check-circle-fill text-success"></i>
                     <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Kind of product</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="product in products">
-                            <td>{{product.name}}</td>
-                            </tr>
-                        </tbody>
 <!--                        <tbody>-->
-<!--                        <ul>-->
-<!--                            <li v-for="product in translatedProducts" :key="product">{{ product }}</li>-->
-<!--                        </ul>-->
+<!--                        <td v-for="product in translatedProducts" :key="product">{{ product }}</td>-->
 <!--                        </tbody>-->
+<!--                       -->
+<!--                        <tr v-for="product in products">-->
+<!--                            <td>{{product.name}}</td>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+                        <tbody>
+                        <ul>
+                            <li v-for="product in translatedProducts" :key="product">{{ product }}</li>
+                        </ul>
+                        </tbody>
                         </tr>
                         </tbody>
                     </table>

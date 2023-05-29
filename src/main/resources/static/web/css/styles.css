@@ -70,6 +70,48 @@
     margin-top: 10%;
 }
 
+/************************************************************/
+.divisas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Ajusta el espacio entre las divisas */
+    align-items: center; /* Centra verticalmente las divisas */
+    padding: 2em; /* Margen interior para las divisas */
+    box-sizing: border-box; /* Incluye el padding en el tamaño total del contenedor */
+}
+
+.divisa {
+    margin: 1em; /* Margen exterior para las divisas */
+}
+
+.banner-container {
+    display: flex;
+    /*overflow: hidden;*/
+    width: 100%;
+    animation: bannerAnimation 20s linear infinite;
+    /*background-color: #646463;*/
+}
+
+.banner-item {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.banner-item:last-child {
+    margin-right: 0;
+}
+
+@keyframes bannerAnimation {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(calc(-100% + 20px));
+    }
+}
+.img-crypto{
+     max-width: 20px;
+ }
 .index-body {
   position: relative; /* Asegura que el video se superponga correctamente */
 }
@@ -123,7 +165,20 @@ body {
   }
 }
 
-button {
+/*button {
+  background: #fff;
+  border: none;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  width: 120px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: skew(-21deg);
+}*/
+
+form-control {
   background: #fff;
   border: none;
   padding: 10px 20px;
@@ -141,7 +196,7 @@ span {
   transform: skew(21deg);
 }
 
-button::before {
+form-control::before {
   content: '';
   position: absolute;
   top: 0;
@@ -154,14 +209,18 @@ button::before {
   transition: all 0.5s;
 }
 
-button:hover {
+form-control:hover {
   color: #fff;
 }
 
-button:hover::before {
+form-control:hover::before {
   left: 0;
   right: 0;
   opacity: 1;
+}
+
+.divisas {
+position: absolute;
 }
 
 

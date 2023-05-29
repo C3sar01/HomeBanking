@@ -11,6 +11,7 @@ import com.mindhub.homebanking.models.TransactionType.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.PDFGeneratorService;
 import com.mindhub.homebanking.services.TransactionService;
 import com.mindhub.homebanking.utils.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -100,7 +100,7 @@ new Vue({
                          })
             },
               getTranslatedProducts: function() {
-                    axios.get('/products')
+                    axios.get('/api/products')
                       .then((response) => {
                         this.translatedProducts = response.data;
                         this.okmodal.show();
