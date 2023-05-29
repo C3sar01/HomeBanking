@@ -5,6 +5,7 @@ var app = new Vue({
         errorToats: null,
         errorMsg: null,
         cryptos:[],
+        indicadores: [],
     },
     methods:{
         getData: function(){
@@ -48,18 +49,22 @@ var app = new Vue({
                     console.error(error);
                 });
         },
-/*        rotateBanner: function() {
-            setInterval(() => {
-                // Mover el primer elemento al final del arreglo
-                this.cryptos.push(this.cryptos.shift());
-            },3000); // Llamar al método cada 3 segundos para la rotación continua
-        }*/
-
+        fetchIndicadores() {
+            axios.get('/api/indicadores')
+                .then(response => {
+                    // Filtrar las divisas requeridas
+                    const divisasRequeridas = ['uf', 'dolar', 'utm', 'euro'];
+                    this.indicadores = Object.values(response.data).filter(indicador => divisasRequeridas.includes(indicador.codigo));
+                })
+                .catch(error => {
+                    console.error('Error fetching indicadores:', error);
+                });
+        }
     },
     mounted: function(){
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.getData();
-        this.getCryptos();/*
-        this.rotateBanner();*/
+        this.getCryptos();
+        this.fetchIndicadores();
     }
 })
