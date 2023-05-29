@@ -44,19 +44,22 @@ var app = new Vue({
             console.error(error);
           });
       },
-      
-      pDF: function (){
-        {
-           fetch('/send')
-               .then(response => response.text())
-               .then(result => {
-                   alert(result); // Muestra el resultado del envío del correo
-               })
-               .catch(error => {
-                   console.error(error);
-               });
-       }
-   },
+      //Enviar pdf por e-mail
+      sendPdf: function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            var accountNumber = this.accountInfo.number;
+            var url = `/send-email?accountNumber=${accountNumber}`;
+
+            axios
+              .get(url)
+              .then(response => {
+                console.log(response.data);
+                this.showToast(response.data); // Muestra el resultado del envío del correo
+              })
+              .catch(error => {
+                console.error(error);
+              });
+      },
 
       formatDate: function(date){
           return new Date(date).toLocaleDateString('en-gb');
@@ -86,6 +89,14 @@ var app = new Vue({
           .catch(error => {
             console.error(error);
           });
+      },
+
+      showToast: function(message) {
+        var toastElement = document.getElementById('success-toast');
+        var toast = new bootstrap.Toast(toastElement);
+        var toastBody = toastElement.querySelector('.toast-body');
+        toastBody.textContent = message;
+        toast.show();
       },
 
 
