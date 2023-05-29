@@ -66,12 +66,5 @@ var app = new Vue({
       document.getElementById("danger-toast")
     );
 
-    // Code to toggle visibility of the first input field in the register form
-    const registerForm = document.querySelector(".register .form");
-    const firstNameInput = registerForm.querySelector('input[name="txt"]');
-
-    registerForm.addEventListener("transitionend", () => {
-      firstNameInput.classList.toggle("hidden-input");
-    });
   },
 });
