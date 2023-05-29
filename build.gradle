@@ -12,7 +12,15 @@ sourceCompatibility = '11'
 repositories {
 	mavenCentral()
 }
-
+bootRun {
+	sourceResources sourceSets.main
+}
+bootJar {
+	archiveFileName = 'homebanking.jar'
+}
+compileJava {
+	options.annotationProcessorPath = configurations.compileClasspath
+}
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -51,7 +59,7 @@ dependencies {
 
 	/********/
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'javax.mail:javax.mail-api'
+
 
 }
 

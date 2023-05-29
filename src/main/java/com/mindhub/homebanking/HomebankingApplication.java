@@ -19,31 +19,38 @@ import java.util.List;
 @SpringBootApplication
 public class HomebankingApplication {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-
+	//	@Autowired
+//	PasswordEncoder passwordEncoder;
+//
 	@Autowired
 	private TransactionService transactionService;
 
 
-    public static void main(String[] args) {
-        SpringApplication.run(HomebankingApplication.class, args);
-    }
+//			Client client1 = new Client("Melba", "Lorenzo", "melba@gmail.com",passwordEncoder.encode("1234"));
+//			Client client2 = new Client("Admin", "Admin", "admin@gmail.com",passwordEncoder.encode("1234"));
+//			Client client3 = new Client("root", "rootLasName", "root@gmail.com",passwordEncoder.encode("1234"));
+
+	public static void main(String[] args) {
+		SpringApplication.run(HomebankingApplication.class, args);
+	}
 
 
-    @Bean
-    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
-                                      TransactionRepository transactionRepository, LoanRepository loanRepository,
-                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository
-    ) {
-        return (args) -> {
+	@Bean
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
+									  TransactionRepository transactionRepository, LoanRepository loanRepository,
+									  ClientLoanRepository clientLoanRepository, CardRepository cardRepository
+	) {
+		return (args) -> {
 /*
             //Clientes
             Client client1 = new Client("Melba", "Lorenzo", "melba@gmail.com", passwordEncoder.encode("1234"));
             Client client2 = new Client("Admin", "Admin", "admin@gmail.com", passwordEncoder.encode("1234"));
             Client client3 = new Client("root", "rootLasName", "root@gmail.com", passwordEncoder.encode("1234"));
+>>>>>>> 6e7a5be787c5d3e30fb6f7f9d9157e2c1b2e0d60
 
 //
 //			//Cuentas
@@ -90,6 +97,33 @@ public class HomebankingApplication {
 //
 //
 //
+<<<<<<< HEAD
+			clientRepository.save(client1);
+			clientRepository.save(client2);
+			clientRepository.save(client3);
+   			accountRepository.save(account1);
+			accountRepository.save(account2);
+			accountRepository.save(account3);
+			transactionRepository.save(transaction1);
+			transactionRepository.save(transaction2);
+			loanRepository.save(loan1);
+			loanRepository.save(loan2);
+			loanRepository.save(loan3);
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
+			cardRepository.save(card1);
+			cardRepository.save(card2);
+			cardRepository.save(card3);
+
+		for (int i = 0; i < 11; i++) {
+				Transaction transaction = new Transaction();
+				transaction.setDate(LocalDateTime.now());
+				transaction.setDescription("Compras");
+				transaction.setAmount(20000.00);
+				transaction.setType(TransactionType.CREDITO);
+				transactionRepository.save(transaction);
+		}
+=======
             clientRepository.save(client1);
             clientRepository.save(client2);
             clientRepository.save(client3);
@@ -106,6 +140,7 @@ public class HomebankingApplication {
             cardRepository.save(card1);
             cardRepository.save(card2);
             cardRepository.save(card3);
+>>>>>>> 6e7a5be787c5d3e30fb6f7f9d9157e2c1b2e0d60
 
             for (int i = 0; i < 11; i++) {
                 Transaction transaction = new Transaction();
@@ -117,9 +152,16 @@ public class HomebankingApplication {
             }
 
 
-        };*/
-        };
-    }
+<<<<<<< HEAD
 
+
+		};
+	}
+=======
+        };*/
+		};
+	}
 
 }
+
+
