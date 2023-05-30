@@ -53,14 +53,12 @@
                                 Loans
                             </a>
                         </li>
-
                         <li>
                             <a href="./accumulaPoints.html" class="nav-link link-dark">
                                 <i class="bi bi-hand-thumbs-up"></i>
                                 Points
                             </a>
                         </li>
-
                     </ul>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -70,15 +68,8 @@
                     <span>Evalúa tu cuenta con IA!</span>
                     <br>
                     <br>
-
-
                     <!-- Logo chatgpt para abrir modal -->
-
                     <img class="chat-logo" src="../img/chatgpt.png" data-toggle="modal" data-target="#chatModal" v-on:click="openModal" v-bind:class="{ 'loading': loading }">
-
-
-
-
                 </div>
             </div>
             <div class="col">
@@ -87,17 +78,13 @@
                         <h1 class="display-1">Account details</h1>
                         <button class="btn btn-primary" @click="downloadPDF">Download PDF</button>
                         <button class="btn btn-primary" @click="sendPdf">Send pdf to email</button>
-                        <!--<button class="btn btn-primary bi bi-envelope"> Send by e-mail</button>-->
                     </div>
-
                     <div id="success-toast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="d-flex">
                             <div class="toast-body"></div>
                             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="row mt-3">
                     <div class="col">
@@ -128,31 +115,27 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!--Ventana Modal ChatGPT -->
+    <!-- Ventana Modal ChatGPT -->
     <div id="chatModal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body">
-                    <p>{{ chatGPTData }}</p>
+                <div class="modal-header">
+                    <img src="../img/robot.png" class="modal-title robot">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="modal-body">
+                    <div id="chatContainer">
+                        <p id="chatText"></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-
 </div>
-
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -161,4 +144,3 @@
 <script src="../js/account.js"></script>
 </body>
 </html>
-

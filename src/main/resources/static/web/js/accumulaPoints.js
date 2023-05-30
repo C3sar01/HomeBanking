@@ -4,6 +4,7 @@ new Vue({
     clientInfo: { },
     clientAccounts: [],
     clientAccountsTo: [],
+    translatedProducts: [],
     products: [],
     totalPuntos: 0,
     numeroTarjeta: '',
@@ -18,8 +19,10 @@ new Vue({
   },
   mounted() {
     this.getDataPoints();
+
     this.getData();
     this.formatDate();
+
     this.okmodal = new bootstrap.Modal(document.getElementById('okModal'));
     this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
   },
@@ -96,13 +99,22 @@ new Vue({
                                 this.errorToats.show();
                          })
             },
+              getTranslatedProducts: function() {
+                    axios.get('/api/products')
+                      .then((response) => {
+                        this.translatedProducts = response.data;
+                        this.okmodal.show();
+                        console.log(response.data)
+                        this.modal.hide();
+                      })
+                      .catch(error => {
+                        this.errorMsg = "Error getting data";
+                        this.errorToats.show();
+                      });
+                  },
             finish: function(){
                         window.location.reload();
                     },
-
-
-  },
-
-
+},
 });
 

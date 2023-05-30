@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,7 +100,7 @@
                                             </div>
                                             <div class="col-md" style="margin:29px">
 
-                                    <button class="btn btn-primary" v-on:click="getProducts" type="submit">Exchange</button>
+                                    <button class="btn btn-primary" v-on:click="getTranslatedProducts" type="submit">Exchange</button>
                                                     </div>
                                         </div>
                                         </div>
@@ -126,21 +127,24 @@
                 <div class="modal-body">
                     Select a kind of product! <i class="bi bi-check-circle-fill text-success"></i>
                     <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Kind of product</th>
-                        </tr>
-                        </thead>
+<!--                        <tbody>-->
+<!--                        <td v-for="product in translatedProducts" :key="product">{{ product }}</td>-->
+<!--                        </tbody>-->
+<!--                       -->
+<!--                        <tr v-for="product in products">-->
+<!--                            <td>{{product.name}}</td>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
                         <tbody>
-                        <tr v-for="product in products">
-                            <td>{{ product.name }}</td>
+                        <ul>
+                            <li v-for="product in translatedProducts" :key="product">{{ product }}</li>
+                        </ul>
+                        </tbody>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" v-on:click="finish" class="btn btn-sm btn-outline-success" data-bs-dismiss="modal">Select</button>
-                </div>
+
             </div>
         </div>
     </div>

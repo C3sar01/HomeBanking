@@ -45,6 +45,11 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.7.0'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.7.11'
 	implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.28'
+//i18n
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 
 
 

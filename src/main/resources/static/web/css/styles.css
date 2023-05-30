@@ -44,8 +44,8 @@
 }
 
 .menu-logo{
-    width: 30px;
-    height: 30px;
+    width: 90px;
+    height: 90px;
 
 }
 
@@ -74,22 +74,15 @@
 .divisas {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly; /* Ajusta el espacio entre las divisas */
-    align-items: center; /* Centra verticalmente las divisas */
-    padding: 2em; /* Margen interior para las divisas */
-    box-sizing: border-box; /* Incluye el padding en el tamaño total del contenedor */
+    justify-content: space-evenly;
+    align-items: center;
+    box-sizing: border-box;
 }
-
-.divisa {
-    margin: 1em; /* Margen exterior para las divisas */
-}
-
 .banner-container {
     display: flex;
-    /*overflow: hidden;*/
     width: 100%;
     animation: bannerAnimation 20s linear infinite;
-    /*background-color: #646463;*/
+    position:absolute ;
 }
 
 .banner-item {
@@ -150,6 +143,7 @@ body {
 
 .chat-logo:hover {
   cursor: pointer;
+
 }
 
 .loading {
@@ -165,7 +159,8 @@ body {
   }
 }
 
-button {
+
+/*button {
   background: #fff;
   border: none;
   padding: 10px 20px;
@@ -176,14 +171,34 @@ button {
   text-transform: uppercase;
   cursor: pointer;
   transform: skew(-21deg);
-}
+}*/
 
-span {
+form-control {
+  background: #fff;
+  border: none;
+  padding: 10px 20px;
   display: inline-block;
-  transform: skew(21deg);
+  font-size: 15px;
+  font-weight: 600;
+  width: 120px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: skew(-21deg);
+
+#chatContainer {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+
 }
 
-button::before {
+#chatText {
+  animation: fadeIn 0.3s linear;
+}
+
+
+form-control::before {
   content: '';
   position: absolute;
   top: 0;
@@ -196,15 +211,34 @@ button::before {
   transition: all 0.5s;
 }
 
-button:hover {
+form-control:hover {
   color: #fff;
 }
 
-button:hover::before {
+form-control:hover::before {
   left: 0;
   right: 0;
   opacity: 1;
 }
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.robot{
+    width: 80px;
+    height: 80px;
+
+}
+
+.divisas {
+position: absolute;
+}
+
+
 
 
 
