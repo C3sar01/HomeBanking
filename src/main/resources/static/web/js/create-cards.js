@@ -29,7 +29,7 @@ var app = new Vue({
                         'content-type': 'application/x-www-form-urlencoded'
                     }
                 }
-                axios.post(`http://localhost:8080/api/clients/current/cards?cardType=${this.cardType}&cardColor=${this.cardColor}`,config)
+                axios.post(`/api/clients/current/cards?cardType=${this.cardType}&cardColor=${this.cardColor}`,config)
                 .then(response => window.location.href = "/web/html/cards.html")
                 .catch((error) =>{
                     this.errorMsg = error.response.data;  
