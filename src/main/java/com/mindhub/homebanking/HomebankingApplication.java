@@ -20,8 +20,8 @@ import java.util.List;
 public class HomebankingApplication {
 
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
 
 	//	@Autowired
 //	PasswordEncoder passwordEncoder;
