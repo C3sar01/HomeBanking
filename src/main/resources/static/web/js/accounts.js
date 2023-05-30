@@ -32,7 +32,7 @@ var app = new Vue({
             })
         },
         create: function(){
-            axios.post('http://localhost:8080/api/clients/current/accounts')
+            axios.post('/api/clients/current/accounts')
             .then(response => window.location.reload())
             .catch((error) =>{
                 this.errorMsg = error.response.data;
@@ -40,7 +40,7 @@ var app = new Vue({
             })
         },
         getCryptos: function () {
-                axios.get('http://localhost:8080/api/cryptos')
+                axios.get('/api/cryptos')
                 .then(response => {
                     this.cryptos = response.data;
                     console.log(this.cryptos);
