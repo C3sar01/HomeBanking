@@ -25,8 +25,9 @@ var app = new Vue({
     },
     downloadPDF: function () {
       const urlParams = new URLSearchParams(window.location.search);
+      console.log(this.accountInfo)
       var accountNumber = this.accountInfo.number;
-      var url = `/api/pdf?accountNumber=${accountNumber};`;
+      var url = `/api/pdf?accountNumber=${accountNumber}`;
 
       axios
         .get(url, { responseType: 'blob' })
