@@ -44,8 +44,8 @@
 }
 
 .menu-logo{
-    width: 30px;
-    height: 30px;
+    width: 90px;
+    height: 90px;
 
 }
 
@@ -143,6 +143,7 @@ body {
 
 .chat-logo:hover {
   cursor: pointer;
+
 }
 
 .loading {
@@ -157,6 +158,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
 
 /*button {
   background: #fff;
@@ -182,12 +184,19 @@ form-control {
   text-transform: uppercase;
   cursor: pointer;
   transform: skew(-21deg);
+
+#chatContainer {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+
 }
 
-span {
-  display: inline-block;
-  transform: skew(21deg);
+#chatText {
+  animation: fadeIn 0.3s linear;
 }
+
 
 form-control::before {
   content: '';
@@ -211,10 +220,25 @@ form-control:hover::before {
   right: 0;
   opacity: 1;
 }
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.robot{
+    width: 80px;
+    height: 80px;
+
+}
 
 .divisas {
 position: absolute;
 }
+
+
 
 
 
